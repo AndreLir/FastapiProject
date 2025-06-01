@@ -40,9 +40,19 @@ async def user(id: int):
 #     except IndexError:
 #         return {"error": "User not found"}, 404
 
-@app.get("/userquery/")
+@app.get("/user")
 async def user(id: int):
         return search_user(id)    
+
+
+@app.post("/user2/")
+async def user(user: User):
+    if type(search_user(user.id))== User:
+        return {"error": "User already exists"}
+    else: 
+        users_list.append(user)
+
+
 
 def search_user(id: int):
     users = filter(lambda user: user.id == id, users_list)
@@ -50,3 +60,4 @@ def search_user(id: int):
         return list(users)[0]
     except IndexError:
         return {"error": "User not found"}, 404
+    
